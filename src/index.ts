@@ -27,7 +27,6 @@ require('@nut-tree/template-matcher')
   // const target = new Point(500, 350);
   // await mouse.setPosition(target);
 }
-
 // Import the framework and instantiate it
 import Fastify from 'fastify'
 import fs from 'fs'
@@ -36,6 +35,7 @@ import setupGitRoutes from './routers/gitRouter'
 import screenshotHandler from './controllers/screenshotController'
 require('dotenv').config()
 
+let errMessage = ''
 const app = Fastify({ logger: true })
 
 // Declare a route
@@ -126,7 +126,9 @@ app.get('/ventas', async (request, reply) => {
     await screenshotHandler(request, reply)
   } catch (error) {
     console.error(error)
-    reply.code(500).send({ message: 'Error al obtener ventas ', error })
+    reply
+      .code(500)
+      .send({ message: 'Error al obtener ventas ', error, errMessage })
   }
 })
 
@@ -139,17 +141,23 @@ app.listen({ port: 3030 }, (err, address) => {
 })
 
 async function buscarRecurso(nombre: string): Promise<Point | null> {
-  const region = await screen.find(imageResource(nombre + '.png'))
+  try {
+    const region = await screen.find(imageResource(nombre + '.png'))
 
-  if (!region) {
+    if (!region) {
+      return null
+    }
+    const point = new Point(
+      region.left + region.width / 2,
+      region.top + region.height / 2
+    )
+
+    return point
+  } catch (error: any) {
+    console.error(error)
+    errMessage = error.message as string
     return null
   }
-  const point = new Point(
-    region.left + region.width / 2,
-    region.top + region.height / 2
-  )
-
-  return point
 }
 async function buscarRecursos(nombres: string[]): Promise<Point | null> {
   for (const nombre of nombres) {
