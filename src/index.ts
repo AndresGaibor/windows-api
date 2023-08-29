@@ -13,7 +13,7 @@ import {
   pixelWithColor,
   RGBA,
 } from '@nut-tree/nut-js'
-import { join } from 'path'
+import path, { join } from 'path'
 import { exec } from 'child_process'
 require('@nut-tree/template-matcher')
 ;async () => {
@@ -50,9 +50,10 @@ app.get('/capture', async function handler(request, reply) {
 
   await screen.highlight(new Region(halfWidth, 0, halfWidth, height))
   await screen.capture('screenshot.png')
-
+  const directorioRaiz = path.join(__dirname, '../')
+  const rutaArchivo = path.join(directorioRaiz, 'screenshot.png')
   // return schreenshot.png
-  const bufferIndexHtml = fs.readFileSync('../screenshot.png')
+  const bufferIndexHtml = fs.readFileSync(rutaArchivo)
   reply.type('image/png').send(bufferIndexHtml)
 })
 setupGitRoutes(app)
