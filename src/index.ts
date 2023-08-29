@@ -51,7 +51,7 @@ fastify.post("/git", async function handler(request, reply) {
     sig == request.headers["x-hub-signature"]
   ) {
     cmd.run("chmod 777 git.sh"); /* :/ Fix no perms after updating */
-    cmd.get("./git.sh", (err: any, data: any) => {
+    cmd.get("../git.sh", (err: any, data: any) => {
       // Run our script
       if (data) console.log(data);
       if (err) console.log(err);
