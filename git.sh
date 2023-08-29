@@ -1,10 +1,10 @@
-#/bin/sh
+#!/bin/sh
 
-# Fetch the newest code
-git fetch origin master
+# Fetch the newest code for the main branch
+git fetch origin main
 
-# Hard reset
-git reset --hard origin/master
+# Hard reset to the latest commit on the main branch
+git reset --hard origin/main
 
-# Force pull
-git pull origin master --force
+# Force pull the latest changes from the main branch
+git pull origin main --force
