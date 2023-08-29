@@ -64,7 +64,7 @@ fastify.post("/git", async function handler(request, reply) {
     const rutaArchivo = path.join(directorioPadre, "git.sh");
 
     exec(`chmod 777 "${rutaArchivo}"`); /* :/ Fix no perms after updating */
-    exec(`./${rutaArchivo}`, (err: any, stdout: any, stderr: any) => {
+    exec(`bash "${rutaArchivo}"`, (err: any, stdout: any, stderr: any) => {
       // Run our script
       if (stdout) console.log(stdout);
       if (err) console.log(err);
