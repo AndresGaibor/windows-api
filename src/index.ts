@@ -29,7 +29,7 @@ require('@nut-tree/template-matcher')
 
 // Import the framework and instantiate it
 import Fastify from 'fastify'
-
+import fs from 'fs'
 import crypto from 'crypto' // pre-installed node package
 import setupGitRoutes from './routers/gitRouter'
 require('dotenv').config()
@@ -50,9 +50,10 @@ app.get('/capture', async function handler(request, reply) {
 
   await screen.highlight(new Region(halfWidth, 0, halfWidth, height))
   await screen.capture('screenshot.png')
-  const pixelPosition = await screen.find(
-    pixelWithColor(new RGBA(255, 0, 0, 255))
-  )
+
+  // return schreenshot.png
+  const bufferIndexHtml = fs.readFileSync('../screenshot.png')
+  reply.type('image/png').send(bufferIndexHtml)
 })
 setupGitRoutes(app)
 
