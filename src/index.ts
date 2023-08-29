@@ -36,7 +36,7 @@ const fastify = Fastify({
 
 // Declare a route
 fastify.get("/", async function handler(request, reply) {
-  return { hello: "mundo" };
+  return { hello: "world" };
 });
 fastify.post("/git", async function handler(request, reply) {
   const cmd = require("node-cmd");
@@ -71,6 +71,7 @@ fastify.post("/git", async function handler(request, reply) {
       if (stderr) console.log(stderr);
     });
     exec("refresh"); // Refresh project
+    exec("pm2 restart 3");
 
     console.log("> [GIT] Updated with origin/master");
   }
