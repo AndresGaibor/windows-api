@@ -31,7 +31,7 @@ const fastify = (0, fastify_1.default)({
 });
 fastify.get("/", function handler(request, reply) {
     return __awaiter(this, void 0, void 0, function* () {
-        return { hello: "mundo 4" };
+        return { hello: "mundo 6" };
     });
 });
 fastify.post("/git", function handler(request, reply) {
