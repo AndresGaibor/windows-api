@@ -164,6 +164,7 @@ async function buscarRecurso(nombre: string): Promise<Point | null> {
 }
 async function buscarRecursos(nombres: string[]): Promise<Point | null> {
   for (const nombre of nombres) {
+    console.log('Buscando recurso: ', nombre)
     const recurso = await buscarRecurso(nombre)
 
     return recurso
