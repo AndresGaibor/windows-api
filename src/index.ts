@@ -74,6 +74,8 @@ app.get('/ventas', async (request, reply) => {
     mouse.setPosition(ventas)
     mouse.click(Button.LEFT)
 
+    sleep(2000)
+
     const facturacion = await buscarRecursos([
       'facturacion',
       'facturacion-2',
@@ -89,6 +91,8 @@ app.get('/ventas', async (request, reply) => {
     mouse.setPosition(facturacion)
     mouse.click(Button.LEFT)
 
+    sleep(2000)
+
     const resumen = await buscarRecursos(['resumen', 'resumen-2'])
     if (!resumen) {
       return reply
@@ -98,6 +102,8 @@ app.get('/ventas', async (request, reply) => {
 
     mouse.setPosition(resumen)
     mouse.click(Button.LEFT)
+
+    sleep(2000)
 
     const textoDesde = await buscarRecurso('desde')
     const textoHasta = await buscarRecurso('hasta')
