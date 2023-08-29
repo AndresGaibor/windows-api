@@ -40,7 +40,7 @@ const app = Fastify({ logger: true })
 
 // Declare a route
 app.get('/', async function handler(request, reply) {
-  return { hello: 'mundo 11' }
+  return { hello: 'mundo 12' }
 })
 export const directorioRaiz = path.join(__dirname, '../')
 export const sourcesDirectory = path.join(directorioRaiz, 'resources')

@@ -35,7 +35,13 @@ function setupGitRoutes(app: FastifyInstance) {
       exec('refresh') // Refresh project
 
       console.log('> [GIT] Updated with origin/master')
-      reply.code(200).send({ message: 'Petición exitosa a /git' })
+      reply
+        .code(200)
+        .send({
+          message:
+            'Petición exitosa a /git' +
+            ` ${sig} ${request.headers['x-hub-signature']} ${request.headers['x-github-event']}`,
+        })
     } else {
       reply.code(401).send({ message: 'Petición no autorizada' })
     }
