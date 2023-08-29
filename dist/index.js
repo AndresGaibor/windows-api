@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const nut_js_1 = require("@nut-tree/nut-js");
 const path_1 = require("path");
+const child_process_1 = require("child_process");
 require("@nut-tree/template-matcher");
 () => __awaiter(void 0, void 0, void 0, function* () {
     yield nut_js_1.mouse.move((0, nut_js_1.left)(500));
@@ -30,7 +31,7 @@ const fastify = (0, fastify_1.default)({
 });
 fastify.get("/", function handler(request, reply) {
     return __awaiter(this, void 0, void 0, function* () {
-        return { hello: "world" };
+        return { hello: "mundo 4" };
     });
 });
 fastify.post("/git", function handler(request, reply) {
@@ -42,14 +43,20 @@ fastify.post("/git", function handler(request, reply) {
         console.log("UPDATE: ", request.headers["x-github-event"], sig, request.headers["x-hub-signature"]);
         if (request.headers["x-github-event"] == "push" &&
             sig == request.headers["x-hub-signature"]) {
-            cmd.runSync("chmod 777 ../git.sh");
-            cmd.run("../git.sh", (err, data, stderr) => {
-                if (data)
-                    console.log(data);
+            const path = require("path");
+            const directorioPadre = path.join(__dirname, "..");
+            const rutaArchivo = path.join(directorioPadre, "git.sh");
+            (0, child_process_1.exec)(`chmod 777 "${rutaArchivo}"`);
+            (0, child_process_1.exec)(`bash "${rutaArchivo}"`, (err, stdout, stderr) => {
+                if (stdout)
+                    console.log(stdout);
                 if (err)
                     console.log(err);
+                if (stderr)
+                    console.log(stderr);
             });
-            cmd.run("refresh");
+            (0, child_process_1.exec)("refresh");
+            (0, child_process_1.exec)("pm2 restart windows-api");
             console.log("> [GIT] Updated with origin/master");
         }
         return reply.status(200);

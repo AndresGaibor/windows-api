@@ -20,7 +20,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "npx tsc && node dist/index.js"
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "dev": "ts-node src/index.ts"
   },
   "keywords": [],
   "author": "",
