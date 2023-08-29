@@ -65,7 +65,9 @@ app.get('/ventas', async (request, reply) => {
     await abrirPerseo()
     const ventas = await buscarRecursos(['ventas-menu', 'ventas-menu-icono'])
     if (!ventas) {
-      return reply.code(500).send({ message: 'No se encontró el recurso' })
+      return reply
+        .code(500)
+        .send({ message: 'No se encontró el recurso ventas' })
     }
     mouse.setPosition(ventas)
     mouse.click(Button.LEFT)
