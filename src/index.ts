@@ -13,6 +13,7 @@ import {
   pixelWithColor,
   RGBA,
   keyboard,
+  sleep,
 } from '@nut-tree/nut-js'
 import path, { join } from 'path'
 import { exec } from 'child_process'
@@ -63,6 +64,7 @@ setupGitRoutes(app)
 app.get('/ventas', async (request, reply) => {
   try {
     await abrirPerseo()
+    await sleep(2000)
     const ventas = await buscarRecursos(['ventas-menu', 'ventas-menu-icono'])
     if (!ventas) {
       return reply
