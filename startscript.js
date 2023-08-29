@@ -1,4 +1,4 @@
-import { exec } from "child_process";
+const exec = require("child_process").exec;
 exec("npm install", { windowsHide: true }, (err, stdout, stderr) => {
   if (err) {
     console.log(err);
