@@ -1,7 +1,7 @@
 const exec = require("child_process").exec;
 
 exec(
-  "npm install && npm run build && npm start",
+  "npm install && npm start",
   { windowsHide: true },
   (err, stdout, stderr) => {
     if (err) {
