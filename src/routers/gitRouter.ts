@@ -12,12 +12,15 @@ const directorioRaiz = path.join(__dirname, '../..')
 
 function setupGitRoutes(app: FastifyInstance) {
   app.post('/git', async (request, reply) => {
-    const { body, headers } = request
+    const { body } = request
     let sig = 'sha1=' + hmac.update(JSON.stringify(body)).digest('hex')
-    const event = headers['x-github-event']
-    const githubSig = headers['x-hub-signature']
+    // const event = headers['x-github-event']
+    // const githubSig = headers['x-hub-signature']
 
-    if (event == 'push' && githubSig == sig) {
+    if (
+      sig === request.headers['x-hub-signature'] &&
+      request.headers['x-github-event'] === 'push'
+    ) {
       // Construir la ruta al archivo git.sh en el directorio padre
       const rutaArchivo = path.join(directorioRaiz, 'git.sh')
 
