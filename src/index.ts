@@ -126,7 +126,7 @@ app.get('/ventas', async (request, reply) => {
     await screenshotHandler(request, reply)
   } catch (error) {
     console.error(error)
-    reply.code(500).send({ message: 'Error al obtener ventas' })
+    reply.code(500).send({ message: 'Error al obtener ventas ', error })
   }
 })
 
