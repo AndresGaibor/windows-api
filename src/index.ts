@@ -75,6 +75,7 @@ app.get('/ventas', async (request, reply) => {
     const facturacion = await buscarRecursos([
       'facturacion',
       'facturacion-2',
+      'facturacion-3',
       'facturacion-icono',
     ])
     if (!facturacion) {
