@@ -44,7 +44,12 @@ fastify.post("/git", async function handler(request, reply) {
 
   let hmac = crypto.createHmac("sha1", SECRET);
   let sig = "sha1=" + hmac.update(JSON.stringify(request.body)).digest("hex");
-
+  console.log(
+    "UPDATE: ",
+    request.headers["x-github-event"],
+    sig,
+    request.headers["x-hub-signature"]
+  );
   // return just status 200
   if (
     request.headers["x-github-event"] == "push" &&
