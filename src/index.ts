@@ -76,7 +76,7 @@ fastify.post("/git", async function handler(request, reply) {
     console.log("> [GIT] Updated with origin/master");
   }
 
-  return reply.status(200);
+  reply.code(200).send({ message: "Petición exitosa a /git" });
 });
 
 // Run the server!
