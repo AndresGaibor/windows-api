@@ -8,3 +8,6 @@ git reset --hard origin/main
 
 # Force pull the latest changes from the main branch
 git pull origin main --force
+
+pm2 stop startscript
+pm2 start startscript.js
