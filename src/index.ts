@@ -99,7 +99,7 @@ app();
     // Region { left: 1, top: 110, width: 102, height: 25 }
     // x 71, y 118
 
-    if (region === null) {
+    if (!region) {
       return;
     }
 
