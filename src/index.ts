@@ -54,6 +54,8 @@ app.get('/capture', async function handler(request, reply) {
   const rutaArchivo = path.join(directorioRaiz, 'screenshot.png')
   // return schreenshot.png
   const bufferIndexHtml = fs.readFileSync(rutaArchivo)
+  // delete file
+  fs.unlinkSync(rutaArchivo)
   reply.type('image/png').send(bufferIndexHtml)
 })
 setupGitRoutes(app)
