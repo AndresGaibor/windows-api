@@ -47,7 +47,7 @@ async () => {
   }
 })();
 
-async () => {
+(async () => {
   try {
     for (let i = 0; i < 10000; i++) {
       const mousePosition = await mouse.getPosition();
@@ -57,4 +57,4 @@ async () => {
   } catch (e) {
     console.error(e);
   }
-};
+})();
