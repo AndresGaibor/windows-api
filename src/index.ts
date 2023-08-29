@@ -24,6 +24,58 @@ async () => {
   // await mouse.setPosition(target);
 };
 
+// Import the framework and instantiate it
+import Fastify from "fastify";
+
+import crypto from "crypto"; // pre-installed node package
+require("dotenv").config();
+
+const fastify = Fastify({
+  logger: true,
+});
+
+// Declare a route
+fastify.get("/", async function handler(request, reply) {
+  return { hello: "world" };
+});
+fastify.post("/git", async function handler(request, reply) {
+  const cmd = require("node-cmd");
+  const SECRET = process.env.SECRET || "mysecret";
+
+  let hmac = crypto.createHmac("sha1", SECRET);
+  let sig = "sha1=" + hmac.update(JSON.stringify(request.body)).digest("hex");
+
+  // return just status 200
+  if (
+    request.headers["x-github-event"] == "push" &&
+    sig == request.headers["x-hub-signature"]
+  ) {
+    cmd.run("chmod 777 git.sh"); /* :/ Fix no perms after updating */
+    cmd.get("./git.sh", (err: any, data: any) => {
+      // Run our script
+      if (data) console.log(data);
+      if (err) console.log(err);
+    });
+    cmd.run("refresh"); // Refresh project
+
+    console.log("> [GIT] Updated with origin/master");
+  }
+
+  return reply.status(200);
+});
+
+// Run the server!
+const app = async () => {
+  try {
+    await fastify.listen({ port: 3030 });
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+};
+
+app();
+
 (async () => {
   try {
     screen.config.resourceDirectory = join(__dirname, "../resources/");

@@ -46,6 +46,10 @@ class MessageService {
   }
 }
 
+class UpdateService {
+  async update() {}
+}
+
 // This tells TypeScript what services we are registering
 type ServiceTypes = {
   messages: MessageService;

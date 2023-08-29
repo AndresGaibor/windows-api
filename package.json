@@ -4,7 +4,11 @@
     "@feathersjs/koa": "^5.0.8",
     "@feathersjs/socketio": "^5.0.8",
     "@nut-tree/nut-js": "^3.1.2",
-    "@nut-tree/template-matcher": "^2.0.0"
+    "@nut-tree/template-matcher": "^2.0.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.22.0",
+    "node-cmd": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.5.7",
