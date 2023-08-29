@@ -1,12 +1,20 @@
-const exec = require("child_process").exec;
+const util = require("util");
+const exec = util.promisify(require("child_process").exec);
 
-exec("npm install", { windowsHide: false }, (err, stdout, stderr) => {
-  if (err) {
-    console.log(err);
-    return;
+async function run() {
+  try {
+    console.log("Installing dependencies...");
+    const installResult = await exec("npm install");
+    console.log(installResult.stdout);
+    console.log(installResult.stderr);
+
+    console.log("Starting server...");
+    const startResult = await exec("npm start");
+    console.log(startResult.stdout);
+    console.log(startResult.stderr);
+  } catch (err) {
+    console.error("Error:", err);
   }
-  console.log(stdout);
-  console.log(stderr);
-  console.log("Starting server...");
-  exec("npm start", { windowsHide: false });
-});
+}
+
+run();
