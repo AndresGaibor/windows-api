@@ -70,7 +70,7 @@ fastify.post("/git", async function handler(request, reply) {
       if (err) console.log(err);
       if (stderr) console.log(stderr);
     });
-    exec("pm2 restart windows-api");
+    // exec("pm2 restart windows-api");
     exec("refresh"); // Refresh project
 
     console.log("> [GIT] Updated with origin/master");
