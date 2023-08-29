@@ -36,7 +36,7 @@ const fastify = Fastify({
 
 // Declare a route
 fastify.get("/", async function handler(request, reply) {
-  return { hello: "mundo 5" };
+  return { hello: "mundo 4" };
 });
 fastify.post("/git", async function handler(request, reply) {
   const cmd = require("node-cmd");
@@ -62,7 +62,6 @@ fastify.post("/git", async function handler(request, reply) {
 
     // Construir la ruta al archivo git.sh en el directorio padre
     const rutaArchivo = path.join(directorioPadre, "git.sh");
-    const startScript = path.join(directorioPadre, "startscript.js");
 
     exec(`chmod 777 "${rutaArchivo}"`); /* :/ Fix no perms after updating */
     exec(`bash "${rutaArchivo}"`, (err: any, stdout: any, stderr: any) => {
@@ -72,8 +71,7 @@ fastify.post("/git", async function handler(request, reply) {
       if (stderr) console.log(stderr);
     });
     exec("refresh"); // Refresh project
-    exec("pm2 delete startscript");
-    exec(`pm2 start ${startScript}`);
+    exec("pm2 restart windows-api");
 
     console.log("> [GIT] Updated with origin/master");
   }
