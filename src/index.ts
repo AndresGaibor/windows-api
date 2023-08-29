@@ -55,10 +55,18 @@ fastify.post("/git", async function handler(request, reply) {
     request.headers["x-github-event"] == "push" &&
     sig == request.headers["x-hub-signature"]
   ) {
+    const path = require("path");
+
+    // Obtener la ruta al directorio padre
+    const directorioPadre = path.join(__dirname, "..");
+
+    // Construir la ruta al archivo git.sh en el directorio padre
+    const rutaArchivo = path.join(directorioPadre, "git.sh");
+
     cmd.runSync(
-      "cd .. & chmod 777 ./git.sh"
+      `chmod 777 "${rutaArchivo}"`
     ); /* :/ Fix no perms after updating */
-    cmd.run("cd .. & ./git.sh", (err: any, data: any, stderr: any) => {
+    cmd.run(`./"${rutaArchivo}"`, (err: any, data: any, stderr: any) => {
       // Run our script
       if (data) console.log(data);
       if (err) console.log(err);
