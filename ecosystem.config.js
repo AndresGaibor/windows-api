@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "windows-api",
-      script: "startscript.js",
+      script: "./startscript.js",
       instances: 1,
       exec_mode: "fork",
       autorestart: false,
