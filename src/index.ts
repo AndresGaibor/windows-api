@@ -119,7 +119,7 @@ app();
     for (let i = 0; i < 10000; i++) {
       const mousePosition = await mouse.getPosition();
 
-      console.log(mousePosition);
+      //   console.log(mousePosition);
     }
   } catch (e) {
     console.error(e);
