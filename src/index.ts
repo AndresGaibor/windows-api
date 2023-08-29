@@ -36,7 +36,7 @@ const fastify = Fastify({
 
 // Declare a route
 fastify.get("/", async function handler(request, reply) {
-  return { hello: "mundo 4" };
+  return { hello: "mundo 5" };
 });
 fastify.post("/git", async function handler(request, reply) {
   const cmd = require("node-cmd");
