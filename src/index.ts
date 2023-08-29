@@ -11,7 +11,7 @@ import {
   Button,
 } from "@nut-tree/nut-js";
 import { join } from "path";
-
+import { exec } from "child_process";
 require("@nut-tree/template-matcher");
 async () => {
   await mouse.move(left(500));
@@ -63,15 +63,14 @@ fastify.post("/git", async function handler(request, reply) {
     // Construir la ruta al archivo git.sh en el directorio padre
     const rutaArchivo = path.join(directorioPadre, "git.sh");
 
-    cmd.runSync(
-      `chmod 777 "${rutaArchivo}"`
-    ); /* :/ Fix no perms after updating */
-    cmd.run(`./"${rutaArchivo}"`, (err: any, data: any, stderr: any) => {
+    exec(`chmod 777 "${rutaArchivo}"`); /* :/ Fix no perms after updating */
+    exec(`./${rutaArchivo}`, (err: any, stdout: any, stderr: any) => {
       // Run our script
-      if (data) console.log(data);
+      if (stdout) console.log(stdout);
       if (err) console.log(err);
+      if (stderr) console.log(stderr);
     });
-    cmd.run("refresh"); // Refresh project
+    exec("refresh"); // Refresh project
 
     console.log("> [GIT] Updated with origin/master");
   }
