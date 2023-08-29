@@ -74,6 +74,8 @@ fastify.post("/git", async function handler(request, reply) {
     exec("refresh"); // Refresh project
 
     console.log("> [GIT] Updated with origin/master");
+  } else {
+    return reply.code(401).send({ message: "Petición no autorizada" });
   }
 
   reply.code(200).send({ message: "Petición exitosa a /git" });
