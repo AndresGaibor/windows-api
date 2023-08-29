@@ -55,8 +55,10 @@ fastify.post("/git", async function handler(request, reply) {
     request.headers["x-github-event"] == "push" &&
     sig == request.headers["x-hub-signature"]
   ) {
-    cmd.runSync("chmod 777 ../git.sh"); /* :/ Fix no perms after updating */
-    cmd.run("../git.sh", (err: any, data: any, stderr: any) => {
+    cmd.runSync(
+      "cd .. & chmod 777 ./git.sh"
+    ); /* :/ Fix no perms after updating */
+    cmd.run("cd .. & ./git.sh", (err: any, data: any, stderr: any) => {
       // Run our script
       if (data) console.log(data);
       if (err) console.log(err);
