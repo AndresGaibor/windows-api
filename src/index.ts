@@ -195,7 +195,9 @@ async function buscarRecursos(nombres: string[]): Promise<Point | null> {
     console.log('Buscando recurso: ', nombre)
     const recurso = await buscarRecurso(nombre)
 
-    return recurso
+    if (recurso) {
+      return recurso
+    }
   }
 
   return null
