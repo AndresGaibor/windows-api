@@ -138,12 +138,12 @@ app.get('/ventas', async (request, reply) => {
     mouse.click(Button.LEFT)
 
     keyboard.config.autoDelayMs = 200
-    keyboard.type('28/08/2023')
+    keyboard.type('28082023')
 
     mouse.setPosition(hasta)
     mouse.click(Button.LEFT)
 
-    keyboard.type('28/08/2023')
+    keyboard.type('28082023')
 
     const buscar = await buscarRecursos(['btn-consultar', 'btn-consultar-2'])
     if (!buscar) {
