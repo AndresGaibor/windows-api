@@ -60,7 +60,7 @@ app.get('/resources/:name', async (request, reply) => {
 })
 
 app.get('/position', async (request, reply) => {
-  sleep(5000)
+  await sleep(5000)
   const position = await mouse.getPosition()
   return position
 })
