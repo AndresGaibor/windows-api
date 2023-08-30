@@ -111,7 +111,7 @@ app.get('/ventas', async (request, reply) => {
 
     await sleep(2000)
 
-    const resumen = await buscarRecursos(['resumen', 'resumen-2'])
+    const resumen = await buscarRecursos(['resumen', 'resumen-2', 'resumen-3'])
     if (!resumen) {
       return reply
         .code(500)
