@@ -59,6 +59,11 @@ app.get('/resources/:name', async (request, reply) => {
   reply.type('image/png').send(buffer)
 })
 
+app.get('/position', async (request, reply) => {
+  const position = await mouse.getPosition()
+  return position
+})
+
 setupGitRoutes(app)
 
 app.get('/ventas', async (request, reply) => {
