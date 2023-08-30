@@ -67,11 +67,14 @@ app.get('/position', async (request, reply) => {
 
 app.post('/click', async (request, reply) => {
   const { body } = request
-  const { x, y } = body as Point
+  const points = body as Point[]
 
-  mouse.setPosition(new Point(x, y))
-  mouse.click(Button.LEFT)
-  return { message: 'Click realizado' }
+  for (const point of points) {
+    await mouse.setPosition(point)
+    await mouse.click(Button.LEFT)
+    sleep(2000)
+  }
+  return { message: 'Clicks realizados' }
 })
 
 setupGitRoutes(app)
