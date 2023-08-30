@@ -64,6 +64,15 @@ app.get('/position', async (request, reply) => {
   return position
 })
 
+app.post('/click', async (request, reply) => {
+  const { body } = request
+  const { x, y } = body as Point
+
+  mouse.setPosition(new Point(x, y))
+  mouse.click(Button.LEFT)
+  return { message: 'Click realizado' }
+})
+
 setupGitRoutes(app)
 
 app.get('/ventas', async (request, reply) => {
