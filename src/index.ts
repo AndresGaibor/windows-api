@@ -132,8 +132,8 @@ app.get('/ventas', async (request, reply) => {
         .send({ message: 'No se encontró el recurso desde o hasta' })
     }
 
-    const desde = new Point(textoDesde.x + 100, textoDesde.y)
-    const hasta = new Point(textoHasta.x + 100, textoHasta.y)
+    const desde = new Point(textoDesde.x + 50, textoDesde.y)
+    const hasta = new Point(textoHasta.x + 50, textoHasta.y)
 
     mouse.setPosition(desde)
     mouse.click(Button.LEFT)
