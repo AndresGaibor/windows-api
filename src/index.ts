@@ -14,6 +14,7 @@ import {
   RGBA,
   keyboard,
   sleep,
+  Key,
 } from '@nut-tree/nut-js'
 import path, { join } from 'path'
 import { exec } from 'child_process'
@@ -137,8 +138,10 @@ app.get('/ventas', async (request, reply) => {
     mouse.setPosition(desde)
     mouse.click(Button.LEFT)
 
-    keyboard.config.autoDelayMs = 200
+    keyboard.config.autoDelayMs = 1000
     keyboard.type('28082023')
+
+    await sleep(2000)
 
     mouse.setPosition(hasta)
     mouse.click(Button.LEFT)
