@@ -95,7 +95,7 @@ app.get('/ventas', async (request, reply) => {
       'facturacion',
       'facturacion-2',
       'facturacion-3',
-      'facturacion-r',
+      'facturacion-4',
       'facturacion-icono',
     ])
     if (!facturacion) {
