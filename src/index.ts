@@ -123,8 +123,8 @@ app.get('/ventas', async (request, reply) => {
 
     await sleep(2000)
 
-    const textoDesde = await buscarRecurso('desde')
-    const textoHasta = await buscarRecurso('hasta')
+    const textoDesde = await buscarRecursos(['fecha-desde', 'fecha-desde-2'])
+    const textoHasta = await buscarRecursos(['fecha-hasta', 'fecha-hasta-2'])
     if (!textoDesde || !textoHasta) {
       return reply
         .code(500)
@@ -144,7 +144,7 @@ app.get('/ventas', async (request, reply) => {
 
     keyboard.type('28/08/2023')
 
-    const buscar = await buscarRecurso('btn-consultar')
+    const buscar = await buscarRecursos(['btn-consultar', 'btn-consultar-2'])
     if (!buscar) {
       return reply
         .code(500)
