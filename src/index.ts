@@ -137,6 +137,7 @@ app.get('/ventas', async (request, reply) => {
     mouse.setPosition(desde)
     mouse.click(Button.LEFT)
 
+    keyboard.config.autoDelayMs = 200
     keyboard.type('28/08/2023')
 
     mouse.setPosition(hasta)
