@@ -15,15 +15,27 @@ export async function facturaHandler(
 ) {
    // { fechaInicio: '2021-01-01', fechaFin: '2021-01-31' }
    const { fechaInicio, fechaFin } = request.query as {
-      fechaInicio: string
-      fechaFin: string
+      fechaInicio: string | undefined
+      fechaFin: string | undefined
    }
-   const [diaInicio, mesInicio, anioInicio] = fechaInicio.split('-').map(Number)
-   const [diaFin, mesFin, anioFin] = fechaFin.split('-').map(Number)
 
    // Crear objetos Date con el mes restado en 1
-   const fechaInicioDate = new Date(anioInicio, mesInicio - 1, diaInicio)
-   const fechaFinDate = new Date(anioFin, mesFin - 1, diaFin)
+   let fechaInicioDate: Date | undefined
+   let fechaFinDate: Date | undefined
+
+   if (fechaInicio) {
+      const [diaInicio, mesInicio, anioInicio] = fechaInicio
+         .split('-')
+         .map(Number)
+
+      fechaInicioDate = new Date(anioInicio, mesInicio - 1, diaInicio)
+   }
+
+   if (fechaFin) {
+      const [diaFin, mesFin, anioFin] = fechaFin.split('-').map(Number)
+
+      fechaFinDate = new Date(anioFin, mesFin - 1, diaFin)
+   }
 
    const facturas = await facturaRepository.search(
       fechaInicioDate,
