@@ -79,16 +79,34 @@ export class WindowsController {
    }
 
    async findImages(nombres: string[]): Promise<Point> {
+      let i = 0
+      let recursoEncontrado: Point | undefined
+
       try {
          for (const nombre of nombres) {
+            i++
             const recurso = await this.findImage(nombre)
-
-            return recurso
+            if (recurso) {
+               recursoEncontrado = recurso
+               break
+            }
          }
+
+         if (!recursoEncontrado) {
+            throw new Error(
+               'No se encontró el recurso findImages ' + nombres[0]
+            )
+         }
+
+         return recursoEncontrado
       } catch (error) {
-         return this.findImages(nombres.splice(1))
-      } finally {
-         throw new Error('No se encontró el recurso ' + nombres[0])
+         if (nombres.length === 1) {
+            throw new Error(
+               'No se encontró el recurso findImages ' + nombres[0]
+            )
+         }
+         const r = await this.findImages(nombres.splice(i))
+         return r
       }
    }
 
