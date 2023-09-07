@@ -99,13 +99,8 @@ export class WindowsController {
          return
       } catch (error) {}
 
-      await this.multipleClicks(
-         [
-            'icono-perseo-barra-segundo-plano',
-            ['reportes', 'reportes-2', 'reportes-3'],
-         ],
-         3
-      )
+      await this.click(['icono-perseo-barra-segundo-plano'], 3)
+      await this.click(['reportes', 'reportes-2', 'reportes-3'])
    }
 
    async obtenerReporte(fechaInicio?: Date, fechaFin?: Date) {
