@@ -150,12 +150,8 @@ export class WindowsController {
          await this.type((fechaFin.getMonth() + 1).toString())
          await this.type(fechaFin.getFullYear().toString())
       }
-      await this.multipleClicks([
-         'visualizar-informe',
-         'exportar',
-         'xml',
-         'guardar',
-      ])
+      await this.click(['visualizar-informe', 'visualizar-informe-2'])
+      await this.multipleClicks(['exportar', 'xml', 'guardar'])
 
       await this.safeClick('si', 3)
 
