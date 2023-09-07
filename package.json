@@ -7,12 +7,14 @@
     "@nut-tree/template-matcher": "^2.0.0",
     "crypto": "^1.0.1",
     "dotenv": "^16.3.1",
-    "fastify": "^4.22.0",
+    "fastify": "^4.22.2",
     "fs": "^0.0.1-security",
-    "node-cmd": "^5.0.0"
+    "node-cmd": "^5.0.0",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
     "@types/node": "^20.5.7",
+    "@types/xml2js": "^0.4.12",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   },
