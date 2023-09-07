@@ -100,7 +100,10 @@ export class WindowsController {
       } catch (error) {}
 
       await this.multipleClicks(
-         ['icono-perseo-barra-segundo-plano', ['reportes', 'reportes-2']],
+         [
+            'icono-perseo-barra-segundo-plano',
+            ['reportes', 'reportes-2', 'reportes-3'],
+         ],
          3
       )
    }
