@@ -130,7 +130,7 @@ export async function obtenerFacturasDesdeDocumentoXml(): Promise<Factura[]> {
    let i = POS_PRIMERA_FACTURA
    console.log(documento)
 
-   while (i < documento.length || documento[i] !== 'Total en Secuencia:') {
+   while (i < documento.length && documento[i] !== 'Total en Secuencia:') {
       console.log('serie ', documento[i])
 
       const [establecimiento, puntoEmision] = documento[i]
