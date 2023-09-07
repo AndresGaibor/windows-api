@@ -157,6 +157,8 @@ export class WindowsController {
          'guardar',
       ])
 
+      await this.safeClick('si', 3)
+
       await this.safeClick('no-abrir-documento')
 
       await this.multipleClicks(['cerrar-reporte', 'cerrar-ventana'])
