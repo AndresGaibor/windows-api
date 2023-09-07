@@ -146,8 +146,8 @@ export async function obtenerFacturasDesdeDocumentoXml(): Promise<Factura[]> {
          secuencia: Number(documento[i + 1]),
          cliente: Number(documento[i + 2]),
          fechaEmision: new Date(year, month - 1, day),
-         descuento: Number(documento[i + 7]),
-         total: Number(documento[i + 11]),
+         descuento: parseFloat(documento[i + 7].replace(',', '.')),
+         total: parseFloat(documento[i + 11].replace(',', '.')),
       }
 
       facturas.push(factura)
