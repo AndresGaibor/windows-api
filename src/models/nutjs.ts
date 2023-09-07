@@ -7,6 +7,7 @@ import {
    Region,
    keyboard,
    sleep,
+   Key,
 } from '@nut-tree/nut-js'
 require('@nut-tree/template-matcher')
 
@@ -123,6 +124,19 @@ export class WindowsController {
    }
 
    async obtenerReporte(fechaInicio?: Date, fechaFin?: Date) {
+      const numbers = [
+         Key.Num0,
+         Key.Num1,
+         Key.Num2,
+         Key.Num3,
+         Key.Num4,
+         Key.Num5,
+         Key.Num6,
+         Key.Num7,
+         Key.Num8,
+         Key.Num9,
+      ]
+
       if (fechaInicio) {
          const region = await this.findRegion('desde')
 
@@ -132,9 +146,20 @@ export class WindowsController {
          )
          await this.click(point)
 
-         await this.type(fechaInicio.getDay().toString())
-         await this.type((fechaInicio.getMonth() + 1).toString())
-         await this.type(fechaInicio.getFullYear().toString())
+         const fecha =
+            fechaInicio.getDay().toString() +
+            (fechaInicio.getMonth() + 1).toString() +
+            fechaInicio.getFullYear().toString()
+         const fechaArray = fecha.split('').map(Number) // [1, 5, 0, 8, 2, 0, 2, 1]
+
+         // await this.type(fechaFin.getDay().toString())
+         // await this.type((fechaFin.getMonth() + 1).toString())
+         // await this.type(fechaFin.getFullYear().toString())
+         await keyboard.pressKey(Key.Num0)
+
+         for (let i of fechaArray) {
+            await keyboard.pressKey(numbers[i])
+         }
       }
 
       if (fechaFin) {
@@ -145,10 +170,20 @@ export class WindowsController {
             region.top + region.height / 2
          )
          await this.click(point)
+         const fecha =
+            fechaFin.getDay().toString() +
+            (fechaFin.getMonth() + 1).toString() +
+            fechaFin.getFullYear().toString()
+         const fechaArray = fecha.split('').map(Number) // [1, 5, 0, 8, 2, 0, 2, 1]
 
-         await this.type(fechaFin.getDay().toString())
-         await this.type((fechaFin.getMonth() + 1).toString())
-         await this.type(fechaFin.getFullYear().toString())
+         // await this.type(fechaFin.getDay().toString())
+         // await this.type((fechaFin.getMonth() + 1).toString())
+         // await this.type(fechaFin.getFullYear().toString())
+         await keyboard.pressKey(Key.Num0)
+
+         for (let i of fechaArray) {
+            await keyboard.pressKey(numbers[i])
+         }
       }
       await this.click(['visualizar-informe', 'visualizar-informe-2'])
       await this.multipleClicks(['exportar', 'xml', 'guardar'])
