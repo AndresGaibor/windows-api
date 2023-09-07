@@ -14,6 +14,19 @@ require('@nut-tree/template-matcher')
 import { sourcesDirectory } from '../constants'
 import { formatString } from '../utils'
 
+const numbers = [
+   Key.Num0,
+   Key.Num1,
+   Key.Num2,
+   Key.Num3,
+   Key.Num4,
+   Key.Num5,
+   Key.Num6,
+   Key.Num7,
+   Key.Num8,
+   Key.Num9,
+]
+
 type ClickTarget = Point | string | string[]
 
 export class WindowsController {
@@ -114,83 +127,48 @@ export class WindowsController {
 
    async openApp() {
       try {
-         await this.findImage('icono-perseo-barra')
+         await this.findImages(['icono-perseo-barra', 'icono-perseo-barra-2'])
 
+         await this.click(['reportes', 'reportes-2', 'reportes-3'])
          return
       } catch (error) {}
 
       await this.click('icono-perseo-barra-segundo-plano')
       await sleep(2000)
+
       await this.click(['reportes', 'reportes-2', 'reportes-3'])
    }
 
+   async ponerFecha(fecha2: Date, recurso: string) {
+      const region = await this.findRegion(recurso)
+
+      const point = new Point(
+         region.left + region.width,
+         region.top + region.height / 2
+      )
+
+      await this.click(point)
+
+      const fecha =
+         formatString(fecha2.getDate(), 2) +
+         formatString(fecha2.getMonth() + 1, 2) +
+         fecha2.getFullYear().toString()
+
+      const fechaArray = fecha.split('').map(Number)
+      for (let i of fechaArray) {
+         await keyboard.pressKey(numbers[i])
+      }
+   }
+
    async obtenerReporte(fechaInicio?: Date, fechaFin?: Date) {
-      const numbers = [
-         Key.Num0,
-         Key.Num1,
-         Key.Num2,
-         Key.Num3,
-         Key.Num4,
-         Key.Num5,
-         Key.Num6,
-         Key.Num7,
-         Key.Num8,
-         Key.Num9,
-      ]
-
       if (fechaInicio) {
-         const region = await this.findRegion('desde')
-
-         const point = new Point(
-            region.left + region.width,
-            region.top + region.height / 2
-         )
-         await this.click(point)
-
-         const fecha =
-            formatString(fechaInicio.getDate().toString(), 2, '0') +
-            formatString((fechaInicio.getMonth() + 1).toString(), 2, '0') +
-            fechaInicio.getFullYear().toString()
-         console.log({
-            dia: fechaInicio.getDate().toString(),
-            mes: (fechaInicio.getMonth() + 1).toString(),
-            anio: fechaInicio.getFullYear().toString(),
-         })
-         const fechaArray = fecha.split('').map(Number) // [1, 5, 0, 8, 2, 0, 2, 1]
-
-         // await this.type(fechaFin.getDay().toString())
-         // await this.type((fechaFin.getMonth() + 1).toString())
-         // await this.type(fechaFin.getFullYear().toString())
-         console.log('fecha', fechaArray)
-
-         for (let i of fechaArray) {
-            await keyboard.pressKey(numbers[i])
-         }
+         await this.ponerFecha(fechaInicio, 'desde')
       }
 
       if (fechaFin) {
-         const region = await this.findRegion('hasta')
-
-         const point = new Point(
-            region.left + region.width,
-            region.top + region.height / 2
-         )
-         await this.click(point)
-         const fecha =
-            fechaFin.getDay().toString() +
-            (fechaFin.getMonth() + 1).toString() +
-            fechaFin.getFullYear().toString()
-         const fechaArray = fecha.split('').map(Number) // [1, 5, 0, 8, 2, 0, 2, 1]
-
-         // await this.type(fechaFin.getDay().toString())
-         // await this.type((fechaFin.getMonth() + 1).toString())
-         // await this.type(fechaFin.getFullYear().toString())
-         await keyboard.pressKey(Key.Num0)
-
-         for (let i of fechaArray) {
-            await keyboard.pressKey(numbers[i])
-         }
+         await this.ponerFecha(fechaFin, 'hasta')
       }
+
       await this.click(['visualizar-informe', 'visualizar-informe-2'])
       await this.multipleClicks(['exportar', 'xml', 'guardar'])
 
