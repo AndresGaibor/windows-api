@@ -155,6 +155,7 @@ export class WindowsController {
          // await this.type(fechaFin.getDay().toString())
          // await this.type((fechaFin.getMonth() + 1).toString())
          // await this.type(fechaFin.getFullYear().toString())
+         console.log('fecha', fechaArray)
 
          for (let i of fechaArray) {
             await keyboard.pressKey(numbers[i])
