@@ -99,7 +99,8 @@ export class WindowsController {
          return
       } catch (error) {}
 
-      await this.click(['icono-perseo-barra-segundo-plano'], 3)
+      await this.click('icono-perseo-barra-segundo-plano')
+      await sleep(2000)
       await this.click(['reportes', 'reportes-2', 'reportes-3'])
    }
 
