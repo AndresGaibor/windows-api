@@ -9,4 +9,6 @@ git reset --hard origin/main
 # Force pull the latest changes from the main branch
 git pull origin main --force
 
+npm install
+
 pm2 restart startscript
