@@ -6,8 +6,8 @@ import { directorioRaiz } from '../constants'
 import facturaRepository from '../repositories/facturaRepository'
 
 export interface FacturaQuery {
-   fechaInicio: string
-   fechaFin: string
+   fechaInicio: string | undefined
+   fechaFin: string | undefined
 }
 export async function facturaHandler(
    request: FastifyRequest,
@@ -15,28 +15,15 @@ export async function facturaHandler(
 ) {
    try {
       // { fechaInicio: '2021-01-01', fechaFin: '2021-01-31' }
-      const { fechaInicio, fechaFin } = request.query as {
-         fechaInicio: string | undefined
-         fechaFin: string | undefined
-      }
+      const { fechaInicio, fechaFin } = request.query as FacturaQuery
 
-      // Crear objetos Date con el mes restado en 1
-      let fechaInicioDate: Date | undefined
-      let fechaFinDate: Date | undefined
+      const fechaInicioDate = fechaInicio
+         ? new Date(fechaInicio + 'T00:00:00')
+         : undefined
 
-      if (fechaInicio) {
-         const [diaInicio, mesInicio, anioInicio] = fechaInicio
-            .split('-')
-            .map(Number)
-
-         fechaInicioDate = new Date(anioInicio, mesInicio - 1, diaInicio)
-      }
-
-      if (fechaFin) {
-         const [diaFin, mesFin, anioFin] = fechaFin.split('-').map(Number)
-
-         fechaFinDate = new Date(anioFin, mesFin - 1, diaFin)
-      }
+      const fechaFinDate = fechaFin
+         ? new Date(fechaFin + 'T00:00:00')
+         : undefined
 
       const facturas = await facturaRepository.search(
          fechaInicioDate,
@@ -46,12 +33,10 @@ export async function facturaHandler(
       // retorna facturas como json
       reply.type('application/json').send({ facturas })
    } catch (error: any) {
-      reply
-         .status(500)
-         .send({
-            message: 'Error al obtener las facturas',
-            error: error.message,
-         })
+      reply.status(500).send({
+         message: 'Error al obtener las facturas',
+         error: error.message,
+      })
    }
 }
 

@@ -148,11 +148,11 @@ export class WindowsController {
          await this.click(point)
 
          const fecha =
-            formatString(fechaInicio.getDay().toString(), 2, '0') +
+            formatString(fechaInicio.getDate().toString(), 2, '0') +
             formatString((fechaInicio.getMonth() + 1).toString(), 2, '0') +
             fechaInicio.getFullYear().toString()
          console.log({
-            dia: fechaInicio.getDay().toString(),
+            dia: fechaInicio.getDate().toString(),
             mes: (fechaInicio.getMonth() + 1).toString(),
             anio: fechaInicio.getFullYear().toString(),
          })
