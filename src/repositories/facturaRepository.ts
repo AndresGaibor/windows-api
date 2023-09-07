@@ -128,16 +128,13 @@ export async function obtenerFacturasDesdeDocumentoXml(): Promise<Factura[]> {
    const facturas: Factura[] = []
 
    let i = POS_PRIMERA_FACTURA
-   console.log(documento)
 
    while (i < documento.length && documento[i] !== 'Total en Secuencia:') {
-      console.log('serie ', documento[i])
-
       const [establecimiento, puntoEmision] = documento[i]
          .split(' ')
          .map(Number)
       // fecha de emision es documento[i + 5] y es 31/08/2023
-      console.log('fecha ', documento[i + 5])
+
       const [day, month, year] = documento[i + 5].split('/').map(Number)
 
       const factura: Factura = {
