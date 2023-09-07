@@ -14,19 +14,6 @@ require('@nut-tree/template-matcher')
 import { sourcesDirectory } from '../constants'
 import { formatString } from '../utils'
 
-const numbers = [
-   Key.Num0,
-   Key.Num1,
-   Key.Num2,
-   Key.Num3,
-   Key.Num4,
-   Key.Num5,
-   Key.Num6,
-   Key.Num7,
-   Key.Num8,
-   Key.Num9,
-]
-
 type ClickTarget = Point | string | string[]
 
 export class WindowsController {
@@ -154,10 +141,7 @@ export class WindowsController {
          formatString(fecha2.getMonth() + 1, 2) +
          fecha2.getFullYear().toString()
 
-      const fechaArray = fecha.split('').map(Number)
-      for (let i of fechaArray) {
-         await keyboard.pressKey(numbers[i])
-      }
+      await this.type(fecha)
    }
 
    async obtenerReporte(fechaInicio?: Date, fechaFin?: Date) {
