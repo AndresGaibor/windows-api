@@ -12,6 +12,7 @@ import {
 require('@nut-tree/template-matcher')
 
 import { sourcesDirectory } from '../constants'
+import { formatString } from '../utils'
 
 type ClickTarget = Point | string | string[]
 
@@ -147,9 +148,14 @@ export class WindowsController {
          await this.click(point)
 
          const fecha =
-            fechaInicio.getDay().toString() +
-            (fechaInicio.getMonth() + 1).toString() +
+            formatString(fechaInicio.getDay().toString(), 2, '0') +
+            formatString((fechaInicio.getMonth() + 1).toString(), 2, '0') +
             fechaInicio.getFullYear().toString()
+         console.log({
+            dia: fechaInicio.getDay().toString(),
+            mes: (fechaInicio.getMonth() + 1).toString(),
+            anio: fechaInicio.getFullYear().toString(),
+         })
          const fechaArray = fecha.split('').map(Number) // [1, 5, 0, 8, 2, 0, 2, 1]
 
          // await this.type(fechaFin.getDay().toString())
