@@ -135,14 +135,14 @@ export async function obtenerFacturasDesdeDocumentoXml(): Promise<Factura[]> {
          .map(Number)
       // fecha de emision es documento[i + 5] y es 31/08/2023
 
-      const [day, month, year] = documento[i + 5].split('/').map(Number)
+      const [day, month, year] = documento[i + 5].split('/')
 
       const factura: Factura = {
          establecimiento,
          puntoEmision,
          secuencia: Number(documento[i + 1]),
          cliente: Number(documento[i + 2]),
-         fechaEmision: new Date(year, month - 1, day),
+         fechaEmision: new Date(`${year}-${month}-${day}T00:00:00`),
          descuento: parseFloat(documento[i + 7].replace(',', '.')),
          total: parseFloat(documento[i + 11].replace(',', '.')),
       }

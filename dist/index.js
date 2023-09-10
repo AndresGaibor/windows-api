@@ -13,86 +13,65 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const nut_js_1 = require("@nut-tree/nut-js");
-const path_1 = require("path");
-const child_process_1 = require("child_process");
-require("@nut-tree/template-matcher");
-() => __awaiter(void 0, void 0, void 0, function* () {
-    yield nut_js_1.mouse.move((0, nut_js_1.left)(500));
-    yield nut_js_1.mouse.move((0, nut_js_1.up)(500));
-    yield nut_js_1.mouse.move((0, nut_js_1.right)(500));
-    console.log("hola");
-    yield nut_js_1.mouse.move((0, nut_js_1.down)(500));
-});
+const path_1 = __importDefault(require("path"));
+require('@nut-tree/template-matcher');
 const fastify_1 = __importDefault(require("fastify"));
-const crypto_1 = __importDefault(require("crypto"));
-require("dotenv").config();
-const fastify = (0, fastify_1.default)({
-    logger: true,
-});
-fastify.get("/", function handler(request, reply) {
+const fs_1 = __importDefault(require("fs"));
+const gitRouter_1 = __importDefault(require("./routers/gitRouter"));
+const screenshotController_1 = __importDefault(require("./controllers/screenshotController"));
+const constants_1 = require("./constants");
+const facturaRouter_1 = __importDefault(require("./routers/facturaRouter"));
+require('dotenv').config();
+let errMessage = '';
+const app = (0, fastify_1.default)({ logger: true });
+app.get('/', function handler(request, reply) {
     return __awaiter(this, void 0, void 0, function* () {
-        return { hello: "mundo 6" };
+        return { hello: 'mundo 12' };
     });
 });
-fastify.post("/git", function handler(request, reply) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const cmd = require("node-cmd");
-        const SECRET = process.env.SECRET || "mysecret";
-        let hmac = crypto_1.default.createHmac("sha1", SECRET);
-        let sig = "sha1=" + hmac.update(JSON.stringify(request.body)).digest("hex");
-        console.log("UPDATE: ", request.headers["x-github-event"], sig, request.headers["x-hub-signature"]);
-        if (request.headers["x-github-event"] == "push" &&
-            sig == request.headers["x-hub-signature"]) {
-            const path = require("path");
-            const directorioPadre = path.join(__dirname, "..");
-            const rutaArchivo = path.join(directorioPadre, "git.sh");
-            (0, child_process_1.exec)(`chmod 777 "${rutaArchivo}"`);
-            (0, child_process_1.exec)(`bash "${rutaArchivo}"`, (err, stdout, stderr) => {
-                if (stdout)
-                    console.log(stdout);
-                if (err)
-                    console.log(err);
-                if (stderr)
-                    console.log(stderr);
-            });
-            (0, child_process_1.exec)("refresh");
-            (0, child_process_1.exec)("pm2 restart windows-api");
-            console.log("> [GIT] Updated with origin/master");
-        }
-        return reply.status(200);
-    });
-});
-const app = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield fastify.listen({ port: 3030 });
+app.get('/capture', screenshotController_1.default);
+app.get('/resources', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+    const files = fs_1.default.readdirSync(constants_1.sourcesDirectory);
+    return files;
+}));
+app.get('/resources/:name', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+    const { name } = request.params;
+    const rutaArchivo = path_1.default.join(constants_1.sourcesDirectory, name);
+    const buffer = fs_1.default.readFileSync(rutaArchivo);
+    reply.type('image/png').send(buffer);
+}));
+app.get('/position', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+    yield (0, nut_js_1.sleep)(5000);
+    const position = yield nut_js_1.mouse.getPosition();
+    return position;
+}));
+app.post('/click', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+    const { body } = request;
+    const points = body;
+    for (const point of points) {
+        yield nut_js_1.mouse.setPosition(point);
+        yield nut_js_1.mouse.click(nut_js_1.Button.LEFT);
+        (0, nut_js_1.sleep)(2000);
     }
-    catch (err) {
-        fastify.log.error(err);
+    return { message: 'Clicks realizados' };
+}));
+(0, gitRouter_1.default)(app);
+(0, facturaRouter_1.default)(app);
+app.get('/ventas', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield (0, screenshotController_1.default)(request, reply);
+    }
+    catch (error) {
+        console.error(error);
+        reply
+            .code(500)
+            .send({ message: 'Error al obtener ventas ', error, errMessage });
+    }
+}));
+app.listen({ port: 3030 }, (err, address) => {
+    if (err) {
+        app.log.error(err);
         process.exit(1);
     }
+    console.log(`Servidor en ejecución en: ${address}`);
 });
-app();
-(() => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        nut_js_1.screen.config.resourceDirectory = (0, path_1.join)(__dirname, "../resources/");
-        const region = yield nut_js_1.screen.find((0, nut_js_1.imageResource)("perseo-barra.png"));
-        const point = new nut_js_1.Point(region.left + region.width / 2, region.top + region.height / 2);
-        nut_js_1.mouse.setPosition(point);
-        nut_js_1.mouse.click(nut_js_1.Button.LEFT);
-        console.log(region);
-    }
-    catch (e) {
-        console.error(e);
-    }
-}))();
-(() => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        for (let i = 0; i < 10000; i++) {
-            const mousePosition = yield nut_js_1.mouse.getPosition();
-            console.log(mousePosition);
-        }
-    }
-    catch (e) {
-        console.error(e);
-    }
-}))();
