@@ -24,6 +24,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && node dist/index.js",
+    "test": "echo no hay test",
     "start:prod": "npm run build && node dist/index.js",
     "build": "tsc",
     "dev": "ts-node src/index.ts"
