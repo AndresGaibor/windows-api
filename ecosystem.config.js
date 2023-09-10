@@ -9,7 +9,8 @@ module.exports = {
          autorestart: true,
          max_memory_restart: '1G',
          env: {
-            NODE_ENV: 'production',
+            NODE_ENV: 'production', // use .env file
+            SECRET: 'secret',
          },
       },
    ],
