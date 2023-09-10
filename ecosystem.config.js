@@ -3,7 +3,7 @@ module.exports = {
       {
          name: 'windowsApi',
          script: 'npm',
-         args: 'run start',
+         args: 'run start:prod',
          instances: 1,
          watch: false,
          autorestart: true,
