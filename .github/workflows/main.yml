@@ -18,4 +18,6 @@ jobs:
               node-version: 16.x
          - run: npm install
          - run: npm test
-         - run: "& 'C:\\Program Files\\nodejs\\pm2.ps1' restart windowsApi"
+         - run: chmod +x ./pm2_runner.sh
+         - run: bash ./pm2_runner.sh
+         #  - run: "& 'C:\\Program Files\\nodejs\\pm2.ps1' restart windowsApi"
