@@ -6,7 +6,7 @@ const { execSync } = require('child_process')
 const [_ingore, _ignore2, ...args] = process.argv
 
 // windowsHide option will hide the cmd window
-execSync(`npm ${args.join(' ')}`, { windowsHide: true, stdio: 'inherit' })
+execSync(`npm start`, { windowsHide: true, stdio: 'inherit' })
 // pm2 start startscript.js --name windowsApi -- start
 
 // async function run() {
