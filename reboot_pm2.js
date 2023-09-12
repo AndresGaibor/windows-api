@@ -29,5 +29,6 @@ async function reiniciar() {
       console.log(error)
    }
 }
+reiniciar()
 
 // execSync(`pm2 restart windowsApi`, { windowsHide: true, stdio: 'inherit' })
