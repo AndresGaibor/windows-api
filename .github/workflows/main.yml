@@ -19,18 +19,28 @@ jobs:
          - run: npm install
          - run: npm test
          - name: Load environment variables
-           shell: pwsh
            run: |
-              Write-Host "Loading environment variables from .env"
-              if (Test-Path .env) {
-                  Get-Content .env | ForEach-Object {
-                      $envVar = $_ -split '=', 2
-                      [System.Environment]::SetEnvironmentVariable($envVar[0], $envVar[1], [System.EnvironmentVariableTarget]::Process)
-                  }
-              }
-              else {
-                  Write-Host "Environment file not found: .env"
-              }
+              echo "Loading environment variables from .env"
+              if [ -f .env ]; then
+                  while IFS= read -r line; do
+                      export "$line"
+                  done < .env
+              else
+                  echo "Environment file not found: .env"
+              fi
+         #  - name: Load environment variables
+         #    shell: pwsh
+         #    run: |
+         #       Write-Host "Loading environment variables from .env"
+         #       if (Test-Path .env) {
+         #           Get-Content .env | ForEach-Object {
+         #               $envVar = $_ -split '=', 2
+         #               [System.Environment]::SetEnvironmentVariable($envVar[0], $envVar[1], [System.EnvironmentVariableTarget]::Process)
+         #           }
+         #       }
+         #       else {
+         #           Write-Host "Environment file not found: .env"
+         #       }
          #  - name: Load environment variables
          #    env:
          #       ENV_FILE: ${{ github.workspace }}\.env
