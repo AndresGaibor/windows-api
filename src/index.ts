@@ -21,7 +21,7 @@ let errMessage = ''
 const app = Fastify({ logger: true })
 
 app.get('/', async function handler(request, reply) {
-   return { hello: 'mundo 24' }
+   return { hello: 'mundo 25' }
 })
 
 app.get('/capture', screenshotHandler)
