@@ -19,7 +19,9 @@ jobs:
          - run: npm install
          - run: npm test
          # execute reboot_pm2.js to restart pm2 in workspace directory
-         - run: node ./reboot_pm2.js
+         - name: restart pm2
+           shell: powershell
+           run: node ./reboot_pm2.js
          #  - name: Load environment variables
          #    shell: powershell
          #    run: pm2 restart windowsApi
