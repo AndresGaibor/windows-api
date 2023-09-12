@@ -19,40 +19,9 @@ jobs:
          - run: npm install
          - run: npm test
          - name: Load environment variables
-           run: |
-              echo "Loading environment variables from .env"
-              if [ -f .env ]; then
-                  while IFS= read -r line; do
-                      export "$line"
-                  done < .env
-              else
-                  echo "Environment file not found: .env"
-              fi
-         #  - name: Load environment variables
-         #    shell: pwsh
-         #    run: |
-         #       Write-Host "Loading environment variables from .env"
-         #       if (Test-Path .env) {
-         #           Get-Content .env | ForEach-Object {
-         #               $envVar = $_ -split '=', 2
-         #               [System.Environment]::SetEnvironmentVariable($envVar[0], $envVar[1], [System.EnvironmentVariableTarget]::Process)
-         #           }
-         #       }
-         #       else {
-         #           Write-Host "Environment file not found: .env"
-         #       }
-         #  - name: Load environment variables
-         #    env:
-         #       ENV_FILE: ${{ github.workspace }}\.env
-         #    run: |
-         #       Write-Host "Loading environment variables from $ENV_FILE"
-         #       if (Test-Path $ENV_FILE) {
-         #           Get-Content $ENV_FILE | ForEach-Object { [System.Environment]::SetEnvironmentVariable($_.Split('=')[0], $_.Split('=')[1], [System.EnvironmentVariableTarget]::Process) }
-         #       }
-         #       else {
-         #           Write-Host "Environment file not found: $ENV_FILE"
-         #       }
-         - run: pm2 restart windowsApi
+           shell: powershell
+           run: pm2 restart windowsApi
+         #  - run: pm2 restart windowsApi
          #  - run: npm install -g pm2
          #  - run: pm2 start ./startscript.js --name windowsApi
          #  - run: chmod 777 ./pm2_runner.sh
