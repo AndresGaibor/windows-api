@@ -11,4 +11,4 @@ git pull origin main --force
 
 npm install
 
-pm2 restart startscript
+pm2 restart windowsApi

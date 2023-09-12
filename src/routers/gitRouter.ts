@@ -12,9 +12,6 @@ const directorioRaiz = path.join(__dirname, '../..')
 
 function setupGitRoutes(app: FastifyInstance) {
    app.post('/git', async (request, reply) => {
-      return reply.code(200).send({
-         message: 'Petición exitosa a /git 2.0',
-      })
       const { body } = request
       let sig = 'sha1=' + hmac.update(JSON.stringify(body)).digest('hex')
       // const event = headers['x-github-event']
